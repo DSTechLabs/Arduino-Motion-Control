@@ -1,0 +1,1 @@
+This motion control web app is for operating a six-axis robot arm plus gripper.  A similar app could also be written to operate a CNC machine or motorized camera system or any multi-motor machine.  It is written in HTML5/CSS3, Javascript, jQuery and AngularJS.  It also connects with the BotServer using web-sockets.
