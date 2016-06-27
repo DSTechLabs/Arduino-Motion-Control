@@ -1,0 +1,51 @@
+[
+  {
+    "motorName"    : "Base Pivot",
+    "portName"     : "COM17",
+    "serialPort"   : "undefined",
+    "lowerLimit"   : "-6400",
+    "upperLimit"   : "6400"
+  },
+  {
+    "motorName"    : "Shoulder",
+    "portName"     : "COM16",
+    "serialPort"   : "undefined",
+    "lowerLimit"   : "0",
+    "upperLimit"   : "12000"
+  },
+  {
+    "motorName"    : "Elbow",
+    "portName"     : "COM15",
+    "serialPort"   : "undefined",
+    "lowerLimit"   : "-4000",
+    "upperLimit"   : "4000"
+  },
+  {
+    "motorName"    : "Forearm Rotate",
+    "portName"     : "COM21",
+    "serialPort"   : "undefined",
+    "lowerLimit"   : "-6400",
+    "upperLimit"   : "6400"
+  },
+  {
+    "motorName"    : "Wrist Tilt",
+    "portName"     : "COM20",
+    "serialPort"   : "undefined",
+    "lowerLimit"   : "-3500",
+    "upperLimit"   : "3500"
+  },
+  {
+    "motorName"    : "Gripper Rotate",
+    "portName"     : "COM19",
+    "serialPort"   : "undefined",
+    "lowerLimit"   : "-2000000000",
+    "upperLimit"   : "2000000000"
+  },
+  {
+    "motorName"    : "Gripper",
+    "portName"     : "COM18",
+    "serialPort"   : "undefined",
+    "lowerLimit"   : "0",
+    "upperLimit"   : "1000"
+  }
+]
