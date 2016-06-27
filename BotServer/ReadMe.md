@@ -1,0 +1,1 @@
+The BotServer is a Node.JS application that uses node-serialport for communicating with multiple Arduino boards.  It also uses Express and Socket.io to "serve" a motion control web application to the end user and communicate with web-sockets.
