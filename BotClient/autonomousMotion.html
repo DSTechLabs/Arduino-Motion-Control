@@ -1,0 +1,78 @@
+<!--=======================================================
+//
+//     FILE : autonomousMotion.html
+//
+//  PROJECT : DSArm Motion Controller
+//
+//  PURPOSE : Autonomous Motion Section:
+//
+//            Motion is controlled by a pre-defined "Task"
+//            and a "Sensor Rule" system.  The Sensor Rule
+//            system is a set of motion Rules defined using
+//            the Rule Editor which allows sensor readings,
+//            decision making, joint movements and
+//            millisecond timings to be defined to
+//            accomplish the Task.
+//
+//            This is the basis for Artificial Intelligence.
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<!-- Autonomous Motion Styles -->
+
+<style>
+
+  #autonomousMotionTabpage
+  {
+
+  }
+
+  li
+  {
+    margin-bottom : 10px;
+  }
+
+</style>
+
+
+<!-- Autonomous Motion UI -->
+
+<div id="autonomousMotionTabpage" class="tabpage" ng-controller="AutonomousMotionController" ng-show="IsNavSelected ('autonomousButton')">
+
+  <div class="tabpageTitle">
+    <img src="Images/icon_Autonomous.png" style="vertical-align:middle">
+    <span style="vertical-align:middle">Autonomous Motion</span>
+  </div>
+
+  <div class="tabPageContent">
+
+    This section will allow the DSArm to operate in an autonomous mode.<br>
+    <br>
+
+    ─────────────── Artificial Intelligence ───────────────<br>
+    <br>
+
+    <div style="display:inline-block; text-align:left">
+      Components of this mode will include:<br>
+      <hr>
+      <ul>
+        <li>A vision system using its EE-Box camera</li>
+        <li>Object recognition and database</li>
+        <li>Haptic feedback from touch/pressure sensors</li>
+        <li>Other sensors may include distance measurement, temperature, mercury tilt/gyro</li>
+        <li>A 'Task Definition' area for specifying high-level tasks such as<br>
+            "Move object A to location B"</li>
+        <li>A 'Rule Editor' with decision making abilities</li>
+      </ul>
+    </div><br>
+    <br>
+
+    Coming soon ...
+
+  </div>
+
+</div>

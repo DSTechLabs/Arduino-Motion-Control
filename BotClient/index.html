@@ -1,0 +1,86 @@
+<!doctype html>
+<!--=======================================================
+//
+//     FILE : index.html
+//
+//  PROJECT : DSArm Motion Controller Version 4
+//
+//  PURPOSE : This is the client side user interface to
+//            controlling the DSArm.  It connects to the
+//            "BotServer" by web socket. The BotServer
+//            runs on a PC local to the DSArm and issues
+//            commands to the DSArm's Stepper Motor
+//            Controllers.
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<html lang="en-us" ng-app="DSMotionController">
+
+  <!-- Head -->
+  <head>
+
+    <!-- These three meta tags MUST come first in the <head> tag. -->
+    <!-- All other <head> content must come AFTER these tags.     -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Metatags -->
+    <meta charset="utf-8" />
+    <meta name="keywords"    content="robot,arm,control,robotic,motion,movement,controller,dc,stepper,motor,gripper" />
+    <meta name="description" content="Control a robotic arm in real-time.  Play games, challenge your friends." />
+    <meta name="author"      content="D+S Tech Labs, Inc." />
+    <meta name="copyright"   content="&copy; 2014-2016, D+S Tech Labs, Inc." />
+    <meta name="robot"       content="noindex, nofollow" />
+
+    <title>DSArm Motion Controller</title>
+
+    <!-- Address bar icon -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Common Styles -->
+    <link rel="stylesheet" href="app.css" />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+
+    <!-- Socket.io -->
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+  </head>
+
+  <!-- Body -->
+  <body>  <!-- onload="ConnectToBotServer();" onunload="Disconnect();"> -->
+
+    <!-- For Full Screen Modal Popups -->
+    <div id="modalBackdrop" onmousedown="HideModal();"></div>
+
+    <ng-include src="'appLayout.html'"></ng-include>
+
+    <!-- Javascript Extras -->
+    <script src="Scripts/jsExtras.js"></script>
+
+    <!-- App Scripts -->
+    <script src="Scripts/class_DSRobotArm.js"></script>
+    <script src="Scripts/class_StepperMotor.js"></script>
+    <script src="Scripts/app.js"></script>
+    <script src="Scripts/navbar.js"></script>
+    <script src="Scripts/intro.js"></script>
+    <script src="Scripts/setup.js"></script>
+    <script src="Scripts/manualControl.js"></script>
+    <script src="Scripts/scriptedMotion.js"></script>
+    <script src="Scripts/autonomousMotion.js"></script>
+    <script src="Scripts/diagnostics.js"></script>
+    <script src="Scripts/liveView.js"></script>
+
+  </body>
+
+</html>

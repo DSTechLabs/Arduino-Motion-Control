@@ -1,0 +1,232 @@
+<!--=======================================================
+//
+//     FILE : firmwareCommands.html
+//
+//  PROJECT : DSArm Motion Controller Version 4
+//
+//  PURPOSE : Firmware command reference popup
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<!-- Styles -->
+
+<style>
+
+  .fCommand
+  {
+    font-family : monospace, courier;
+    font-size   : medium;
+    font-weight : bold;
+  }
+
+  .fDescription
+  {
+    font-family : sans-serif;
+    font-size   : small;
+    font-weight : normal;
+  }
+
+</style>
+
+<!-- UI -->
+
+<div class="modalDiv">  <!--  style="width:800px; max-width:800px">  -->
+
+  <h1>Firmware Command Reference</h1>
+  <hr>
+
+  The BotServer is "connected" to seven(7) Arduino NANO boards and communicates through a dedicated<br>
+  serial port for each board. &nbsp;The BotServer passes motor commands to the appropriate firmware.<br>
+  Each NANO board is connected to a stepper motor driver that takes 5-volt Enable, Direction and Pulse signals.<br>
+  A typical stepper motor driver would be the MA860H Microstep Driver.<br>
+  <br>
+
+  Each Arduino NANO board's firmware receives and executes stepper motor commands by serial communication.<br>
+  Serial communication parameters are set at 57600-baud, 8 data bits, no parity, 1 stop bit.<br>
+  Serial commands are assumed completed when the "newline" '\n' character is received.<br>
+  Carriage Return characters '\r' are ignored and discarded.<br>
+  <br>
+
+  <b><u>Each board's firmware controls one(1) stepper motor with the following serial commands:</u></b><br>
+  <table cellspacing="0" cellpadding="0" style="margin-left:20px">
+    <tr><td class="fCommand">EN   </td><td class="fCommand">&nbsp;= ENABLE               </td><td class="fDescription">&nbsp; &nbsp; - Enables the motor driver (energizes the motor)                                              </td></tr>
+    <tr><td class="fCommand">DI   </td><td class="fCommand">&nbsp;= DISABLE              </td><td class="fDescription">&nbsp; &nbsp; - Disables the motor driver (releases the motor)                                              </td></tr>
+    <tr><td class="fCommand">SH   </td><td class="fCommand">&nbsp;= SET HOME POSITION    </td><td class="fDescription">&nbsp; &nbsp; - Sets the current position of the motor as its HOME position (Sets Absolute position to zero)</td></tr>
+    <tr><td class="fCommand">SL...</td><td class="fCommand">&nbsp;= SET LOWER LIMIT      </td><td class="fDescription">&nbsp; &nbsp; - Sets the LOWER LIMIT (minimum Absolute Position) of the motor's range                       </td></tr>
+    <tr><td class="fCommand">SU...</td><td class="fCommand">&nbsp;= SET UPPER LIMIT      </td><td class="fDescription">&nbsp; &nbsp; - Sets the UPPER LIMIT (maximum Absolute Position) of the motor's range                       </td></tr>
+    <tr><td class="fCommand">SRr  </td><td class="fCommand">&nbsp;= SET RAMP             </td><td class="fDescription">&nbsp; &nbsp; - Sets the trapezoidal velocity RAMP (0-9) for smooth motor start and stop                    </td></tr>
+    <tr><td class="fCommand">RA...</td><td class="fCommand">&nbsp;= ROTATE ABSOLUTE      </td><td class="fDescription">&nbsp; &nbsp; - Rotates motor to an Absolute target position from its HOME position                         </td></tr>
+    <tr><td class="fCommand">RR...</td><td class="fCommand">&nbsp;= ROTATE RELATIVE      </td><td class="fDescription">&nbsp; &nbsp; - Rotates motor clockwise or counter-clockwise any number of steps from its current position  </td></tr>
+    <tr><td class="fCommand">RH   </td><td class="fCommand">&nbsp;= ROTATE HOME          </td><td class="fDescription">&nbsp; &nbsp; - Rotates motor to its HOME position                                                          </td></tr>
+    <tr><td class="fCommand">RL   </td><td class="fCommand">&nbsp;= ROTATE LOWER LIMIT   </td><td class="fDescription">&nbsp; &nbsp; - Rotates motor to its LOWER LIMIT position                                                   </td></tr>
+    <tr><td class="fCommand">RU   </td><td class="fCommand">&nbsp;= ROTATE UPPER LIMIT   </td><td class="fDescription">&nbsp; &nbsp; - Rotates motor to its UPPER LIMIT position                                                   </td></tr>
+    <tr><td class="fCommand">ES   </td><td class="fCommand">&nbsp;= E-STOP               </td><td class="fDescription">&nbsp; &nbsp; - Stops the motor immediately (emergency stop) (requires RE command to continue)              </td></tr>
+    <tr><td class="fCommand">RE   </td><td class="fCommand">&nbsp;= RESUME               </td><td class="fDescription">&nbsp; &nbsp; - Resume normal operation after E-Stop                                                        </td></tr>
+    <tr><td class="fCommand">GA   </td><td class="fCommand">&nbsp;= GET ABSOLUTE position</td><td class="fDescription">&nbsp; &nbsp; - Returns the motor's current step position relative to its HOME position                     </td></tr>
+    <tr><td class="fCommand">GR   </td><td class="fCommand">&nbsp;= GET RELATIVE position</td><td class="fDescription">&nbsp; &nbsp; - Returns the motor's current step position relative to its last targeted position            </td></tr>
+    <tr><td class="fCommand">GL   </td><td class="fCommand">&nbsp;= GET LOWER LIMIT      </td><td class="fDescription">&nbsp; &nbsp; - Returns the motor's Absolute LOWER LIMIT position                                           </td></tr>
+    <tr><td class="fCommand">GU   </td><td class="fCommand">&nbsp;= GET UPPER LIMIT      </td><td class="fDescription">&nbsp; &nbsp; - Returns the motor's Absolute UPPER LIMIT position                                           </td></tr>
+    <tr><td class="fCommand">GV   </td><td class="fCommand">&nbsp;= GET VERSION          </td><td class="fDescription">&nbsp; &nbsp; - Returns this firmware's current version                                                     </td></tr>
+    <tr><td class="fCommand">BL   </td><td class="fCommand">&nbsp;= BLINK LED            </td><td class="fDescription">&nbsp; &nbsp; - Blink the onboard LED of Arduino NANO board                                                 </td></tr>
+  </table>
+
+  <hr>
+
+  Motor rotation velocity follows a trapezoidal shape.<br>
+  A linear ramp-up/ramp-down rate is set by the SR command for each motor.<br>
+  A single digit ramp value (0-9) is specified with the SR command:<br>
+  <br>
+
+  <pre>
+                                     .--------------------------------.    <-- full velocity
+    A ramp value of 0                |                                |
+    specifies no ramping:            |                                |
+    (not recommended)                |                                |
+                                   --------------------------------------
+
+                                         .------------------------.        <-- full velocity
+    A ramp value of 5                   /                          \
+    specifies moderate ramping:        /                            \
+    This is the default at startup    /                              \
+                                   --------------------------------------
+
+                                             .----------------.            <-- full velocity
+    A ramp value of 9                      /                    \
+    specifies gradual ramping:           /                        \
+                                       /                            \
+                                   --------------------------------------
+  </pre>
+
+  Use low values (1, 2, ..) for fast accelerations with light loads<br>
+  and high values (.., 8, 9) for slow accelerations with heavy loads.<br>
+  It is highly recommended to use slow acceleration when moving high inertial loads.<br>
+
+  <pre>
+                                            ----------    <-- full velocity
+  If there is not enough time to achieve
+  full velocity, then rotation velocity         /\
+  follows a "stunted" triangle path:           /  \
+                                            ----------
+  </pre>
+
+  Once a ramp value is set for a motor, all rotate commands for that motor<br>
+  will use its specified ramp value. &nbsp;The default ramp value at start-up is 6.<br>
+  <br>
+
+  <hr>
+
+  All five ROTATE commands return the 2-char string "RC" to indicate completion of rotation<br>
+  (RC = Rotate Complete).<br>
+  <br>
+
+  If a Rotate command is received when the motor is already active (running a previous Rotate command),<br>
+  then the current rotation is interrupted and the new Rotate command is executed from the motor's<br>
+  current position.<br>
+  <br>
+
+  Motor rotation may be suspended and resumed at a later time using the PA(Pause) and RE(Resume) commands.<br>
+  <br>
+
+  <hr>
+
+  The default LOWER and UPPER Range Limits are set to +2 billion and -2 billion at start up.<br>
+  It is assumed the host (PC) software will set these limits from a configuration file or other means.<br>
+  If a range limit has been reached (the motor's Absolute Position has reached the set LOWER LIMIT or UPPER LIMIT),<br>
+  then the motor's motion is stopped and a Range Error "RE" message is returned.<br>
+  <br>
+
+  <hr>
+
+  This firmware may also be queried for position, range limits and firmware version, with the following serial commands:<br>
+  <table cellspacing="0" cellpadding="0" style="margin-left:20px">
+    <tr><td class="fCommand">GA</td><td class="fCommand">&nbsp;= GET ABSOLUTE position</td><td class="fDescription">&nbsp; &nbsp; - Returns the motor's current step position relative to its HOME position         </td></tr>
+    <tr><td class="fCommand">GR</td><td class="fCommand">&nbsp;= GET RELATIVE position</td><td class="fDescription">&nbsp; &nbsp; - Returns the motor's current step position relative to its last targeted position</td></tr>
+    <tr><td class="fCommand">GL</td><td class="fCommand">&nbsp;= GET LOWER LIMIT      </td><td class="fDescription">&nbsp; &nbsp; - Returns the motor's Absolute LOWER LIMIT position                               </td></tr>
+    <tr><td class="fCommand">GU</td><td class="fCommand">&nbsp;= GET UPPER LIMIT      </td><td class="fDescription">&nbsp; &nbsp; - Returns the motor's Absolute UPPER LIMIT position                               </td></tr>
+    <tr><td class="fCommand">GV</td><td class="fCommand">&nbsp;= GET VERSION          </td><td class="fDescription">&nbsp; &nbsp; - Returns this firmware's current version                                         </td></tr>
+    <tr><td class="fCommand">GV</td><td class="fCommand">&nbsp;= BLINK LED            </td><td class="fDescription">&nbsp; &nbsp; - Blink the onboard LED of the Arduino NANO board                                 </td></tr>
+  </table>
+  <br>
+
+  The returned result is a string with the following format:<br>
+  <table cellspacing="0" cellpadding="0" style="margin-left:20px">
+    <tr><td class="fCommand">APs...</td><td class="fCommand">&nbsp;=</td><td class="fDescription">&nbsp; &nbsp; Absolute Position of motor m is s steps from its HOME position         </td></tr>
+    <tr><td class="fCommand">RPs...</td><td class="fCommand">&nbsp;=</td><td class="fDescription">&nbsp; &nbsp; Relative Position of motor m is s steps from its last targeted position</td></tr>
+    <tr><td class="fCommand">LLs...</td><td class="fCommand">&nbsp;=</td><td class="fDescription">&nbsp; &nbsp; LOWER LIMIT of motor m relative to its HOME position                   </td></tr>
+    <tr><td class="fCommand">ULs...</td><td class="fCommand">&nbsp;=</td><td class="fDescription">&nbsp; &nbsp; UPPER LIMIT of motor m relative to its HOME position                   </td></tr>
+  </table>
+  where s is a positive or negative long integer (depending on clockwise or counter-clockwise position)<br>
+  and represents a number of steps which may be 1 to 10 digits plus a possible sign.<br>
+  <br>
+
+  The motor's HOME position is always zero (0).<br>
+  <br>
+
+  <hr>
+  Command String Format: (no spaces between fields)<br>
+  <hr>
+  <pre>
+                            cc vvvv sssssssssss<cr><lf>
+                            |   |        |
+    Command/Query ----------*   |        |
+       [2-chars]                |        |
+       EN = ENABLE              |        |
+       DI = DISABLE             |        |
+       SH = SET HOME            |        |
+       SL = SET LOWER LIMIT     |        |
+       SU = SET UPPER LIMIT     |        |
+       SR = SET RAMP            |        |
+       RA = ROTATE ABSOLUTE     |        |
+       RR = ROTATE RELATIVE     |        |
+       RH = ROTATE HOME         |        |
+       RL = ROTATE LOWER LIMIT  |        |
+       RU = ROTATE UPPER LIMIT  |        |
+       ES = E-STOP              |        |
+       RE = RESUME              |        |
+       GA = GET ABS POSITION    |        |
+       GR = GET REL POSITION    |        |
+       GL = GET LOWER LIMIT     |        |
+       GU = GET UPPER LIMIT     |        |
+       GV = GET VERSION         |        |
+       BL = BLINK LED           |        |
+                                |        |
+    Velocity Ramp Rate ---------*        |
+       [1-digit] 0 - 9          |        |
+       (For SR command only)    |        |
+                                |        |  ----.
+    Velocity (steps per sec) ---*        |      |
+       [4-digits] 1___ - 9999            |      |
+       Right-padded with spaces          |      |
+                                         |      |
+    Absolute or Relative Step Position --*      |--- For ROTATE commands only
+       [1 to 10-digits plus sign]               |
+       No padding necessary                     |
+       -2147483648 to 2147483647 (long)         |
+       Positive values = Clockwise              |
+       Negative values = Counter-Clockwise      |
+                                            ----*
+  </pre>
+
+  <hr>
+  <b>Examples:</b><br>
+  <hr>
+
+  <table cellspacing="0" cellpadding="0" style="margin-left:20px">
+    <tr><td class="fCommand">EN          </td><td class="fCommand">&nbsp;= ENABLE               </td><td class="fDescription">&nbsp; &nbsp; - Enable the stepper motor driver                                                                    </td></tr>
+    <tr><td class="fCommand">DI          </td><td class="fCommand">&nbsp;= DISABLE              </td><td class="fDescription">&nbsp; &nbsp; - Disable the stepper motor driver                                                                   </td></tr>
+    <tr><td class="fCommand">SH          </td><td class="fCommand">&nbsp;= SET HOME             </td><td class="fDescription">&nbsp; &nbsp; - Set the current position of the motor as its HOME position (which is zero)                         </td></tr>
+    <tr><td class="fCommand">RA500 2000  </td><td class="fCommand">&nbsp;= ROTATE ABSOLUTE      </td><td class="fDescription">&nbsp; &nbsp; - Rotate the motor at 500 steps per second, to Absolute position of +2000 steps clockwise from HOME  </td></tr>
+    <tr><td class="fCommand">RR3210-12000</td><td class="fCommand">&nbsp;= ROTATE RELATIVE      </td><td class="fDescription">&nbsp; &nbsp; - Rotate the motor at 3210 steps per second, -12000 steps counter-clockwise from its current position</td></tr>
+    <tr><td class="fCommand">RH          </td><td class="fCommand">&nbsp;= ROTATE HOME          </td><td class="fDescription">&nbsp; &nbsp; - Rotate motor back to its HOME position (0)                                                         </td></tr>
+    <tr><td class="fCommand">RL          </td><td class="fCommand">&nbsp;= ROTATE to LOWER LIMIT</td><td class="fDescription">&nbsp; &nbsp; - Rotate motor to its LOWER LIMIT position                                                           </td></tr>
+    <tr><td class="fCommand">SR6         </td><td class="fCommand">&nbsp;= SET RAMP             </td><td class="fDescription">&nbsp; &nbsp; - Set the velocity ramp-up/ramp-down rate to 6                                                       </td></tr>
+    <tr><td class="fCommand">ES          </td><td class="fCommand">&nbsp;= EMERGENCY STOP       </td><td class="fDescription">&nbsp; &nbsp; - Immediately stop the motor                                                                         </td></tr>
+    <tr><td class="fCommand">GR          </td><td class="fCommand">&nbsp;= GET RELATIVE POSITION</td><td class="fDescription">&nbsp; &nbsp; - Get the current relative step position of the motor                                                </td></tr>
+  </table>
+  <br>
+
+</div>

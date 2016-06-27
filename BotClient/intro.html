@@ -1,0 +1,50 @@
+<!--=======================================================
+//
+//     FILE : intro.html
+//
+//  PROJECT : DSArm Motion Controller
+//
+//  PURPOSE : Introduction and overview to this website.
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<!-- Intro Styles -->
+
+<style>
+
+  #introTabpage
+  {
+
+  }
+
+</style>
+
+
+<!-- Intro UI -->
+
+<div id="introTabpage" class="tabpage" ng-controller="IntroController" ng-show="IsNavSelected ('introButton')">
+
+  <div class="tabpageTitle">
+    <img src="Images/icon_Intro.png" style="vertical-align:middle">
+    <span style="vertical-align:middle">Intro</span>
+  </div>
+
+  <div class="tabPageContent">
+
+    Welcome to the DSArm Motion Controller.<br>
+    Here, you can manipulate a real robot arm and see it live!<br>
+    <br>
+
+    Our robot arm, the DSArm One, has six joints (degrees of freedom) plus a gripper.<br>
+    Each joint is controlled by a stepper motor and are labeled like so:<br>
+    <br>
+
+    <img src="Images/image_ArmParts.png" alt="image_ArmParts.png" />
+
+  </div>
+
+</div>

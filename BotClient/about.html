@@ -1,0 +1,96 @@
+<!--=======================================================
+//
+//     FILE : about.html
+//
+//  PROJECT : DSArm Motion Controller
+//
+//  PURPOSE : About Section
+//            · Info about the DSArm
+//              and this web application
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<!-- About Styles -->
+
+<style>
+
+  #aboutTabpage
+  {
+
+  }
+
+</style>
+
+
+<!-- about UI -->
+
+<div id="aboutTabpage" class="tabpage" ng-show="IsNavSelected ('aboutButton')">
+
+  <div class="tabpageTitle">
+    <img src="Images/icon_About.png" style="vertical-align:middle">
+    <span style="vertical-align:middle">About</span>
+  </div>
+
+  <div class="tabPageContent">
+
+    <!-- The DSArm One -->
+    <div class="groupBox">
+      <div class="groupBoxTitle">About the DSArm One</div>
+      <div class="groupBoxContent">
+        The <b>DSArm One</b> is the first six DOF (degrees of freedom)<br>
+        robotic arm developed by D+S Tech Labs, Inc.<br>
+        <br>
+
+        Our goal is to provide a simple, low cost robotic arm<br>
+        that is still accurate and capable for medium duty<br>
+        pick-and-place or assembly applications.<br>
+        <br>
+
+        Each joint, plus gripper, uses an open-ended micro-stepping motor<br>
+        controlled by a dedicated Arduino NANO MCU board<br>
+        running our proprietary <b>Stepper Motor Controller</b> firmware.<br>
+        <br>
+
+        An overview diagram is coming soon ...
+      </div>
+    </div><br>
+
+    <!-- The Motion Controller -->
+    <div class="groupBox">
+      <div class="groupBoxTitle">About this Motion Controller</div>
+      <div class="groupBoxContent">
+        The <b>DSArm Motion Controller</b> provides a high level<br>
+        user interface to the robot arm for manual, scripted and<br>
+        autonomous motion.<br>
+        <br>
+
+        It is an AngularJS Web Application that issues motor<br>
+        commands to the <b>Stepper Motor Controllers</b> using<br>
+        high-speed web-socket communication, the <b>Bot Server</b>.<br>
+      </div>
+    </div><br>
+
+    <!-- Contact Info -->
+    <div class="groupBox">
+      <div class="groupBoxTitle">Contact Info</div>
+      <div class="groupBoxContent">
+        <table class="centeredTable">
+          <tr>
+            <td align="right" valign="top">Email:</td>
+            <td align="left" valign="top"><a href="mailto:bill@dstechlabs.com" style="text-shadow:1px 1px 0px #000000">bill@dstechlabs.com</a></td>
+          </tr>
+          <tr>
+            <td align="right" valign="top">Linked In:</td>
+            <td align="left" valign="top"><a href="http://linkedin.com/pub/bill-daniels/1b/b49/634" target="_blank" style="text-shadow:1px 1px 0px #000000">Bill Daniels</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>

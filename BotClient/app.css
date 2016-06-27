@@ -1,0 +1,426 @@
+/*=========================================================
+//
+//     FILE : app.css
+//
+//  PROJECT : DSArm Motion Controller
+//
+//  PURPOSE : Global Styles
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//=======================================================*/
+
+/*--- body ----------------------------------------------*/
+
+body
+{
+  position : absolute;  /* occupy full browser client area */
+  left     : 0;
+  top      : 0;
+  width    : 100%;
+  height   : 100%;
+  margin   : 0;
+  padding  : 0;
+  overflow : hidden;
+
+  color               : #FFFFFF;  /* default  */
+  background-color    : #404040;  /* fallback */
+  background-image    : url('Images/bg_BrushedMetal_Dark.jpg');
+  background-position : center top;
+  background-size     : cover;
+  background-repeat   : repeat-y;
+}
+
+/*--- fullBrowserWindow ---------------------------------*/
+/* Apply this style to the page's outer <div>            */
+
+#fullBrowserWindow
+{
+  width   : 100%;
+  height  : 100%;
+  margin  : 0;
+  padding : 0;
+}
+
+/*--- Globals -------------------------------------------*/
+
+a:link    { text-decoration : none; color : #00D0D0; border:0px; }
+a:visited { text-decoration : none; color : #00D0D0; border:0px; }
+a:hover   { text-decoration : none; color : #00D0D0; border:0px; }
+a:active  { text-decoration : none; color : #FFFF00; border:0px; }
+
+.dropShadow
+{
+  border     : 1px solid #000000;
+  box-shadow : 5px 5px 5px #606060;
+}
+
+.appTitle
+{
+  font-family : Georgia, Arial, Sans-Serif;
+  font-size   : 36px;
+  font-weight : bold;
+  text-shadow : 2px 2px 2px #606060;
+}
+
+/*--- Fonts ---------------------------------------------*/
+
+@font-face
+{
+  font-family : calliFont;
+  src         : url('Fonts/font_CalligraphyFLF.ttf');  /* Firefox, Chrome, Safari, Opera */
+}
+
+@font-face
+{
+  font-family : ethnoFont;
+  src         : url('Fonts/font_Ethnocen.ttf');  /* Firefox, Chrome, Safari, Opera */
+}
+
+@font-face
+{
+  font-family : XcelFont;
+  src         : url('Fonts/font_Xcelv3.ttf');  /* Firefox, Chrome, Safari, Opera */
+}
+
+/*--- Opacities -----------------------------------------*/
+
+.opacity20
+{
+  zoom            : 1;  /* Forces layout */
+  -ms-filter      : "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter          : alpha(opacity=20);
+  -webkit-opacity : 0.2;
+  -moz-opacity    : 0.2;
+  -khtml-opacity  : 0.2;
+  opacity         : 0.2;
+}
+
+.opacity40
+{
+  zoom            : 1;  /* Forces layout */
+  -ms-filter      : "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+  filter          : alpha(opacity=40);
+  -webkit-opacity : 0.4;
+  -moz-opacity    : 0.4;
+  -khtml-opacity  : 0.4;
+  opacity         : 0.4;
+}
+
+.opacity60
+{
+  zoom            : 1;  /* Forces layout */
+  -ms-filter      : "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter          : alpha(opacity=60);
+  -webkit-opacity : 0.6;
+  -moz-opacity    : 0.6;
+  -khtml-opacity  : 0.6;
+  opacity         : 0.6;
+}
+
+.opacity80
+{
+  zoom            : 1;  /* Forces layout */
+  -ms-filter      : "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter          : alpha(opacity=80);
+  -webkit-opacity : 0.8;
+  -moz-opacity    : 0.8;
+  -khtml-opacity  : 0.8;
+  opacity         : 0.8;
+}
+
+/*--- Modals --------------------------------------------*/
+
+#modalBackdrop
+{
+  display  : none;
+  position : fixed;
+  top      : 0;
+  right    : 0;
+  bottom   : 0;
+  left     : 0;
+  z-index  : 9999;
+  overflow : auto;
+
+  background-color : rgba(0, 0, 0, 0.7);
+  opacity          : 1.0;
+
+  text-align : center;
+}
+
+.modalDiv
+{
+  display  : inline-block;
+  margin   : 100px auto;
+  padding  : 20px;
+  z-index  : 10000;
+
+  color            : #000000;
+  background-color : #FFFFFF;
+
+  border                : 1px solid #000000;
+  border-radius         : 10px;
+  -moz-border-radius    : 10px;
+  -webkit-border-radius : 10px;
+  box-shadow            : 0px 0px 10px #000000;
+  -moz-box-shadow       : 0px 0px 10px #000000;
+  -webkit-box-shadow    : 0px 0px 10px #000000;
+
+  text-align : left;
+}
+
+/*--- Floaters ------------------------------------------*/
+
+.floatLeft
+{
+  display    : inline-block;
+  float      : left;
+  text-align : center;
+}
+
+.floatRight
+{
+  display    : inline-block;
+  float      : right;
+  text-align : center;
+}
+
+.floatLeftMiddle
+{
+  display    : inline-block;
+  float      : left;
+  text-align : center;
+  position   : relative;
+  top        : 50%;
+  transform  : translateY(-50%);
+}
+
+.floatRightMiddle
+{
+  display    : inline-block;
+  float      : right;
+  text-align : center;
+  position   : relative;
+  top        : 50%;
+  transform  : translateY(-50%);
+}
+
+/*--- Tabpage -------------------------------------------*/
+
+.tabpage
+{
+  display  : block;
+  position : relative;
+  top      : 0px;
+  left     : 0px;
+  margin   : 0px;
+  padding  : 0px;
+  overflow : hidden;
+
+  /*box-shadow : 0px 5px 20px 5px inset;*/
+
+  vertical-align : top;
+}
+
+.tabpageTitle
+{
+  display : block;
+  top     : 0px;
+  padding : 2px;  /* 10px 2px 20px; */
+
+  color               : #FFFFFF;
+  background-color    : #000080;  /* fallback */
+  background-image    : url('Images/bg_BrushedMetal_Blue.jpg');
+  background-position : center top;
+  background-repeat   : repeat-y;
+  background-size     : cover;
+
+  box-shadow : 0px 0px 5px 5px #000000;
+
+  font-family : ethnoFont, Georgia, Verdana, sans-serif;
+  font-size   : xx-large;
+
+  text-shadow : 2px 2px 2px #404040;
+  white-space : nowrap;
+
+  text-align     : center;
+  vertical-align : middle;
+}
+
+.tabPageContent
+{
+  padding  : 20px;
+  overflow : auto;
+
+  font-family : Georgia, Verdana, sans-serif;
+  font-size   : large;
+
+  text-align : center;
+}
+
+/*--- GroupBox ------------------------------------------*/
+
+.groupBox
+{
+  display        : inline-block;
+  margin         : 0px 10px 10px 0px;
+  border-radius  : 10px;
+  box-shadow     : 2px 2px 2px 2px #000000;
+  vertical-align : top;
+}
+
+.groupBoxTitle
+{
+  display : block;
+  padding : 3px 10px;
+
+  border-radius : 10px 10px 0px 0px;
+
+  color               : #FFFFFF;
+  background-color    : #000080;  /* fallback */
+  background-image    : url('Images/bg_BrushedMetal_Blue.jpg');
+  background-position : center top;
+  background-repeat   : repeat-y;
+  background-size     : cover;
+
+  font-family    : ethnoFont, Georgia, Verdana, sans-serif;
+  font-size      : medium;
+  font-weight    : normal;
+  white-space    : nowrap;
+  text-shadow    : 2px 2px #000000;
+  text-align     : center;
+  vertical-align : middle;
+}
+
+.groupBoxContent
+{
+  padding : 10px;
+  border-radius : 0px 0px 10px 10px;
+
+  color               : #000000;
+  background-color    : #C0C0C0;  /* fallback */
+  background-image    : url('Images/bg_BrushedMetal_Light.jpg');
+  background-position : center top;
+  background-repeat   : repeat-y;
+  background-size     : cover;
+
+  font-family      : sans-serif;
+  font-size        : medium;
+  font-weight      : normal;
+  white-space      : nowrap;
+  /*text-shadow      : 1px 1px #FFFFFF;*/
+  text-align       : center;
+}
+
+/*--- centeredTable -------------------------------------*/
+
+.centeredTable
+{
+  margin-left  : auto;
+  margin-right : auto;
+}
+
+/*--- forms ---------------------------------------------*/
+
+.formLabel
+{
+  display  : inline-block;
+  width    : 150px;  /* to be customized using style="" */
+  overflow : hidden;
+
+  color            : #000000;
+  background-color : transparent;
+
+  font-family : sans-serif;
+  font-size   : large;
+  font-weight : normal;
+
+  text-align     : right;
+  vertical-align : middle;
+}
+
+.formField
+{
+  display       : inline-block;
+  margin-bottom : 1px;
+  padding       : 2px 5px;
+  width         : 150px;
+  overflow      : hidden;
+
+  border        : 1px inset #000000;
+  border-radius : 8px;
+
+  color            : #000000;
+  background-color : #FFF0C0;
+
+  font-family : sans-serif;
+  font-size   : large;
+  font-weight : normal;
+
+  text-align     : left;
+  vertical-align : middle;
+}
+
+.formButton
+{
+  margin   : 1px;
+  padding  : 2px 5px;
+  overflow : hidden;
+  cursor   : pointer;
+
+  color            : #000000;
+  background-color : #E0E0E0;  /* fallback */
+  background       : -webkit-linear-gradient(#F0F0F0, #A0A0A0); /* Safari 5.1 to 6.0  */
+  background       : -o-linear-gradient(#F0F0F0, #A0A0A0);      /* Opera 11.1 to 12.0 */
+  background       : -moz-linear-gradient(#F0F0F0, #A0A0A0);    /* Firefox 3.6 to 15  */
+  background       : linear-gradient(#F0F0F0, #A0A0A0);         /* Standard syntax    */
+
+  border        : 2px outset #000000;
+  border-radius : 8px;
+
+  font-family : sans-serif;
+  font-size   : medium;
+  font-weight : normal;
+}
+
+.formButton:hover
+{
+  border : 2px solid #0000FF;
+}
+
+.formButton:active
+{
+  background-color : #C0C0C0;  /* fallback */
+  background       : -webkit-linear-gradient(#C0C0C0, #808080); /* Safari 5.1 to 6.0  */
+  background       : -o-linear-gradient(#C0C0C0, #808080);      /* Opera 11.1 to 12.0 */
+  background       : -moz-linear-gradient(#C0C0C0, #808080);    /* Firefox 3.6 to 15  */
+  background       : linear-gradient(#C0C0C0, #808080);         /* Standard syntax    */
+
+  border : 2px inset #000000;
+}
+
+/*--- digital -------------------------------------------*/
+
+.digital
+{
+  display       : inline-block;
+  margin-bottom : 1px;
+  padding       : 2px 5px;
+  width         : 80px;
+  overflow      : hidden;
+
+  border        : 1px inset #000000;
+  border-radius : 8px;
+
+  color            : #00FF20;
+  background-color : #202020;
+
+  font-family : monospace;
+  font-size   : x-large;
+  font-weight : normal;
+
+  text-align     : right;
+  vertical-align : middle;
+}

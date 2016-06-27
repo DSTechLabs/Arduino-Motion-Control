@@ -1,0 +1,222 @@
+<!--=======================================================
+//
+//     FILE : diagnostics.html
+//
+//  PROJECT : DSArm Motion Controller
+//
+//  PURPOSE : Application and Firmware Diagnostics
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<!-- Diagnostics Styles -->
+
+<style>
+
+  #diagnosticsTabpage
+  {
+
+  }
+
+/*
+  .diagBlock
+  {
+    display        : inline-block;
+    margin         : 0px;
+    text-align     : left;
+    vertical-align : top;
+  }
+*/
+
+  .motorButton
+  {
+    display : none;
+  }
+
+  .motorLabel
+  {
+    display  : inline-block;
+    position : relative;
+    width    : 180px;
+    height   : 40px;
+    margin   : 0px;
+    padding  : 0px;
+
+    border-width  : 1px;
+    border-radius : 15px 0px 0px 15px;
+    border-color  : #000000;
+    box-shadow    : -2px -2px 2px 2px #000000 inset;
+
+    color               : #202020;
+    background-color    : #808080;  /* fallback */
+    background-image    : url('Images/bg_BrushedMetal_Medium.jpg');
+    background-position : center top;
+    background-size     : cover;
+    background-repeat   : repeat-y;
+
+    font-family : sans-serif;
+    font-size   : large;
+    font-weight : bold;
+    text-shadow : 1px 1px #808080;
+
+    white-space    : nowrap;
+    text-align     : center;
+    vertical-align : top;
+  }
+
+  .motorButton:active + label, .motorButton:checked + label
+  {
+    width        : 177px;
+    height       : 37px;
+    padding-left : 3px;
+    padding-top  : 3px;
+
+    box-shadow : 0px 0px 2px 2px #0000FF inset;
+
+    color               : #0000FF;
+    background-color    : #C0C0C0;  /* fallback */
+    background-image    : url('Images/bg_BrushedMetal_Light.jpg');
+    background-position : center top;
+    background-size     : cover;
+    background-repeat   : repeat-y;
+  }
+
+  .motorLabelSpan
+  {
+    display   : inline-block;
+    position  : relative;
+    top       : 50%;
+    transform : translateY(-55%);
+  }
+
+  #monitorBox
+  {
+    margin   : 0px;
+    padding  : 2px;
+    overflow : scroll;
+
+    color            : #00FF10;
+    background-color : #202020;
+
+    font-family : monospace;
+    font-size   : small;
+    font-weight : normal;
+
+    text-align     : left;
+    vertical-align : top;
+
+    white-space : pre;
+  }
+
+  #userCommandSelect
+  {
+    width : 180px;
+
+    text-align     : left;
+    vertical-align : middle;
+  }
+
+  #userCommandBox
+  {
+    margin-left : -180px;
+    width       : 146px;
+
+    text-align     : left;
+    vertical-align : middle;
+  }
+
+</style>
+
+
+<!-- Diagnostics UI -->
+
+<div id="diagnosticsTabpage" class="tabpage" ng-controller="DiagnosticsController" ng-show="IsNavSelected ('diagnosticsButton')">
+
+  <div class="tabpageTitle">
+    <img src="Images/icon_Diagnostics.png" style="vertical-align:middle">
+    <span style="vertical-align:middle">Diagnostics</span>
+  </div>
+
+  <div class="tabPageContent">
+
+    <!-- BotServer Monitor -->
+    <div class="groupBox">
+      <div class="groupBoxTitle">BotServer Monitor</div>
+      <div class="groupBoxContent">
+        <textarea id="monitorBox" cols="80" rows="30" readonly ng-model="MonitorList"></textarea>
+      </div>
+    </div>
+
+    <!-- Manual Commands -->
+    <div class="groupBox" style="margin-left:20px">
+      <div class="groupBoxTitle">&nbsp;Manual Commands&nbsp;</div>
+      <div class="groupBoxContent">
+        <div style="margin-bottom:4px">Select Motor to Send Command:</div>
+        <div ng-repeat="motor in DSArm.Motors">
+          <input id ="motorButton + {{ $index }}" type="radio" class="motorButton" name="motorGroup" ng-checked="$first" ng-click="setSelectedMotor($index);">
+          <label for="motorButton + {{ $index }}" class="motorLabel" style="border-radius:10px"><span class="motorLabelSpan">{{ motor.Name }}</span></label>
+        </div>
+        <br>
+
+        <div style="display:inline-block; text-align:center">
+          <button class="formButton" ng-click="selectedMotor.BlinkLED();"><b>Blink</b><br> MCU Board LED </button><br>
+<!--           <button class="formButton" ng-click="customFunction();"> Custom Function </button><br>   -->
+          <br>
+
+          <div style="display:inline-block; text-align:left">
+            <div style="margin-bottom:4px">Firmware command: <img src="Images/icon_Question.png" style="cursor:pointer; vertical-align:middle" onmousedown="ShowModalFile ('firmwareCommands.html');" alt="?"></div>
+            <select id="userCommandSelect" class="digital" ng-options="userCommand for userCommand in userCommandList" ng-model="userCommand"></select><input id="userCommandBox" type="text" class="digital" style="border:1px solid #000000" ng-model="userCommand" ng-keyup="userCommandBox_keyup($event)">
+            <button class="formButton" style="margin-left:20px" ng-click="sendCommand (userCommand)"> Send </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+<!--
+    <div style="display:inline-block; text-align:center; vertical-align:top">
+
+      <div class="groupBox">
+        <div class="groupBoxTitle">GPIO Pin Check</div>
+        <div class="groupBoxContent">
+          <button ng-click="togglePin('LED', $event)"> Blink User LED </button><br>
+
+          <table class="centeredTable" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="center">
+                <span style="font-size:x-large; font-weight:bold; text-decoration:underline"> &nbsp; P9 &nbsp; </span><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P9_11', $event)">11</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P9_12', $event)">12</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P9_13', $event)">13</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P9_14', $event)">14</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P9_15', $event)">15</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P9_16', $event)">16</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P9_17', $event)">17</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P9_18', $event)">18</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P9_19', $event)">19</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P9_20', $event)">20</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P9_21', $event)">21</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P9_22', $event)">22</button>
+              </td>
+              <td width="40"> </td>
+              <td align="center">
+                <span style="font-size:x-large; font-weight:bold; text-decoration:underline"> &nbsp; P8 &nbsp; </span><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P8_7' , $event)">7</button><button  class="pinButton" style="background-color:black" ng-click="togglePin('P8_8' , $event)">8</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P8_9' , $event)">9</button><button  class="pinButton" style="background-color:black" ng-click="togglePin('P8_10', $event)">10</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P8_11', $event)">11</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P8_12', $event)">12</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P8_13', $event)">13</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P8_14', $event)">14</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P8_15', $event)">15</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P8_16', $event)">16</button><br>
+                <button class="pinButton" style="background-color:black" ng-click="togglePin('P8_17', $event)">17</button><button class="pinButton" style="background-color:black" ng-click="togglePin('P8_18', $event)">18</button><br>
+              </td>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+-->
+
+
+
+</div>

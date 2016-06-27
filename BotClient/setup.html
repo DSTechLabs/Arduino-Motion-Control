@@ -1,0 +1,182 @@
+<!--=======================================================
+//
+//     FILE : setup.html
+//
+//  PROJECT : DSArm Motion Controller
+//
+//  PURPOSE : Stepper Motor Setup for each Joint
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<!-- Setup Styles -->
+
+<style>
+
+  #setupTabpage
+  {
+
+  }
+
+  .motorRange
+  {
+    display : inline-block;
+  }
+
+  .motorRangeTitle
+  {
+    display  : inline-block;
+    position : relative;
+    left     : 0px;
+    top      : 0px;
+    width    : 110px;
+    height   : 75px;
+
+    font-family : sans-serif;
+    font-size   : x-large;
+    font-weight : bolder;
+
+    text-align     : left;
+    vertical-align : top;
+    line-height    : 95%;
+    white-space    : normal;
+  }
+
+  .motorRangeContent
+  {
+    display : inline-block;
+    height  : 75px;
+
+    font-family : sans-serif;
+    text-align  : center;
+
+    vertical-align : top;
+  }
+
+  .tinyText
+  {
+    height      : 12px;
+    font-family : sans-serif;
+    font-size   : small;
+    font-style  : italic;
+  }
+
+  .motorLimit
+  {
+    width            : 80px;
+    background-color : #606060;
+    font-size        : medium;
+  }
+
+  .disableBox
+  {
+    display  : inline-block;
+    position : absolute;
+    left     : 0px;
+    bottom   : 0px;
+
+    font-family    : sans-serif;
+    font-size      : small;
+    font-weight    : normal;
+    text-align     : left;
+    vertical-align : bottom;
+  }
+
+  .disabled
+  {
+    background-color : #FFFF00;
+    opacity          : 0.5;
+    pointer-events   : none;
+  }
+
+</style>
+
+
+<!-- Setup UI -->
+
+<div id="setupTabpage" class="tabpage" ng-controller="SetupController" ng-show="IsNavSelected ('setupButton')">
+
+  <div class="tabpageTitle">
+    <img class="stepButton" src="Images/icon_Setup.png" style="vertical-align:middle">
+    <span style="vertical-align:middle">Setup</span>
+  </div>
+
+  <div class="tabPageContent">
+
+    <!-- Motor Ranges -->
+    <div class="groupBox">
+      <div class="groupBoxTitle">
+        Motor Ranges
+      </div>
+      <div class="groupBoxContent">
+
+        <div ng-repeat="motor in DSArm.Motors">
+
+          <div class="motorRange">
+
+            <div class="motorRangeTitle">
+              {{ motor.Name }}
+              <div class="disableBox">
+                <label title="Disable the motor driver. WARNING: This will release this arm section and allow it to fall!"><input type="checkbox" ng-model="motor.Disabled" ng-change="motor.Disabled ? motor.Disable() : motor.Enable()">Disable</label>
+              </div>
+            </div>
+
+            <div class="motorRangeContent" ng-class="{ disabled : motor.Disabled }">
+
+              <button class="formButton" title="Move this motor 100 steps counter-clockwise" ng-click="motor.Advance(-100)">
+                <img style="vertical-align:middle" src="Images/icon_MultiStepCCW.png"> 100
+              </button
+             ><button class="formButton" title="Move this motor 1 step counter-clockwise" ng-click="motor.Advance(-1)">
+                <img style="vertical-align:middle" src="Images/icon_SingleStepCCW.png"> 1
+              </button>
+
+              <label class="digital">{{ motor.Position }}</label>
+
+              <button class="formButton" title="Move this motor 1 step clockwise" ng-click="motor.Advance(1)">1
+                <img style="vertical-align:middle" src="Images/icon_SingleStepCW.png">
+              </button
+             ><button class="formButton" title="Move this motor 100 steps clockwise" ng-click="motor.Advance(100)">100
+                <img style="vertical-align:middle" src="Images/icon_MultiStepCW.png">
+              </button><br>
+
+              <div style="display:inline-block; vertical-align:bottom">
+                <label class="tinyText">Lower Limit:</label><br>
+                <label class="digital motorLimit">{{ motor.LowerLimit }}</label>
+              </div>
+<!--
+              <button class="formButton" title="Set this motor's LOWER LIMIT to the current position shown above" ng-click="motor.SetLowerLimit(motor.Position)">
+                Set<br><b>LL</b>
+              </button>
+-->
+              <button class="formButton" ng-style="motor.Homed ? class_Homed : class_UnHomed" title="Set this motor's current position as its HOME position" ng-click="motor.SetHomePosition()">
+                Set <b>HOME</b> Position
+              </button>
+<!--
+              <button class="formButton" title="Set this motor's UPPER LIMIT to the current position shown above" ng-click="motor.SetUpperLimit(motor.Position)">
+                Set<br><b>UL</b>
+              </button>
+-->
+              <div style="display:inline-block; vertical-align:bottom">
+                <label class="tinyText">Upper Limit:</label><br>
+                <label class="digital motorLimit">{{ motor.UpperLimit }}</label>
+              </div>
+
+            </div>
+
+          </div>
+
+          <hr ng-if="!$last">
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+

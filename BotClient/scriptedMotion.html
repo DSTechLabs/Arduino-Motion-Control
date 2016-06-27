@@ -1,0 +1,265 @@
+<!--=======================================================
+//
+//     FILE : scriptedMotion.html
+//
+//  PROJECT : DSArm Motion Controller
+//
+//  PURPOSE : Scripted Motion:
+//            Motion is defined by executing a "script"
+//            of pre-definded joint movements.  Each
+//            scripted movement is defined by a set of
+//            six joint target positions/velocities and
+//            a gripper position.  There is no limit to
+//            the number of scripted movements and they
+//            are saved to each user's database.
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<!-- Scripted Motion Styles -->
+
+<style>
+
+  #scriptTableHeader
+  {
+    color            : #C0C0C0;
+    background-color : #004040;
+    background       : -webkit-linear-gradient(#006060, #002020); /* Safari 5.1 to 6.0  */
+    background       : -o-linear-gradient(#006060, #002020);      /* Opera 11.1 to 12.0 */
+    background       : -moz-linear-gradient(#006060, #002020);    /* Firefox 3.6 to 15  */
+    background       : linear-gradient(#006060, #002020);         /* Standard syntax    */
+
+    font-family : sans-serif;
+    font-size   : medium;
+    font-weight : normal;
+
+    text-align : center;
+  }
+
+  .scriptTableRow
+  {
+    color            : #000000;
+    background-color : #FFFFFF;
+
+    font-family : sans-serif;
+    font-size   : medium;
+    font-weight : normal;
+  }
+
+  .skippedRow
+  {
+    background-color : #FFFF00;
+    opacity          : 0.5;
+  }
+
+  .scriptField
+  {
+    -moz-appearance : textfield;
+  }
+
+ .scriptField::-webkit-outer-spin-button, .scriptField::-webkit-inner-spin-button
+  {
+    -webkit-appearance : text-field;
+    display : none;  /* Crashes Chrome on hover */
+    /* margin: 0;  Apparently some margins are still there even though it's hidden */
+  }
+
+  .deleteButton
+  {
+    width   : 18px;
+    padding : 2px 2px;
+
+    color            : #FF0000;
+    background-color : #C0C0C0;
+
+    font-weight : bold;
+    text-align  : center;
+  }
+
+  #plusButton
+  {
+    color      : #C0C0C0;
+    background : #008000;
+
+    font-size   : large;
+    font-weight : bold;
+
+    text-align : left;
+  }
+
+  #saveButton
+  {
+    color      : #C0C0C0;
+    background : #0000C0;
+
+    font-size   : large;
+    font-weight : bold;
+
+    vertical-align : bottom;
+  }
+
+  #homeButton
+  {
+    color      : #000000;
+    background : #808080;
+
+    font-size   : large;
+    font-weight : bold;
+
+    text-align     : right;
+    vertical-align : bottom;
+  }
+
+  #executeButton
+  {
+    color      : #000000;
+    background : #FFFF00;
+
+    font-size   : xx-large;
+    font-weight : bold;
+
+    text-align     : right;
+    vertical-align : bottom;
+  }
+
+</style>
+
+
+<!-- Scripted Motion UI -->
+
+<div id="scriptedMotionTabpage" class="tabpage" ng-controller="ScriptedMotionController" ng-show="IsNavSelected ('scriptedButton')">
+
+  <div class="tabpageTitle">
+    <img src="Images/icon_Scripted.png" style="vertical-align:middle">
+    <span style="vertical-align:middle">Scripted Motion</span>
+  </div>
+
+  <div class="tabPageContent">
+
+    <div class="groupBox">
+      <div class="groupBoxTitle">DSArm Scripted Positions</div>
+      <div class="groupBoxContent">
+
+        <!-- Script Files -->
+        <div style="text-align:left">
+          <label class="formLabel" style="width:90px">Script File:</label>
+          <select class="formField" style="width:300px" ng-model="scriptFile" ng-change="getScriptFileData()">
+            <option value="" disabled selected hidden>Select script file ...</option>
+            <option ng-repeat="item in scriptFileList" value="{{ item }}">{{ item }}</option>
+          </select>
+          &nbsp;or&nbsp;
+          <button class="formButton saveButton" ng-click="newScript()"> New Script </button>
+        </div>
+
+        <!-- Table -->
+        <table style="margin-top:10px" width="100%" border="1" cellspacing="0" cellpadding="5">
+
+          <!-- Header Row -->
+          <tr id="scriptTableHeader">
+            <th align="center" valign="bottom">Index</th>
+            <th align="center" valign="bottom">Position<br>Name</th>
+            <th align="center" valign="bottom">Base<br>Rotation</th>
+            <th align="center" valign="bottom">Shoulder</th>
+            <th align="center" valign="bottom">Elbow</th>
+            <th align="center" valign="bottom">Forearm<br>Rotation</th>
+            <th align="center" valign="bottom">Wrist<br>Tilt</th>
+            <th align="center" valign="bottom">Gripper<br>Rotation</th>
+            <th align="center" valign="bottom">Gripper</th>
+            <th align="center" valign="bottom">% Max<br>Speed</th>
+            <th align="center" valign="bottom">Hold<br>Time</th>
+            <th align="center" valign="bottom">Special<br>Function</th>
+          </tr>
+
+          <tr id="{{ 'positionRow' + $index.toString() }}" class="scriptTableRow" ng-class="{ skippedRow : position.skip }" ng-repeat="position in positionRows">
+            <td align="center">{{ $index + 1 }}</td>
+            <td align="center">
+              <input type="text" class="formField" ng-model="position.positionName" />
+            </td>
+            <td align="center">
+              <input type="number" class="digital scriptField" min="{{ DSArm.Motors[0].LowerLimit }}" max="{{ DSArm.Motors[0].UpperLimit }}" ng-model="position.baseRot" /><br>
+              <img style="vertical-align:middle" src="Images/icon_MultiStepCCW.png"  ng-click="DSArm.Motors[0].Advance(-100);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCCW.png" ng-click="DSArm.Motors[0].Advance(  -1);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCW.png"  ng-click="DSArm.Motors[0].Advance(   1);"
+             ><img style="vertical-align:middle" src="Images/icon_MultiStepCW.png"   ng-click="DSArm.Motors[0].Advance( 100);">
+            </td>
+            <td align="center">
+              <input type="number" class="digital scriptField" min="{{ DSArm.Motors[1].LowerLimit }}" max="{{ DSArm.Motors[1].UpperLimit }}" ng-model="position.shoulder" /><br>
+              <img style="vertical-align:middle" src="Images/icon_MultiStepCCW.png"  ng-click="DSArm.Motors[1].Advance(-100);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCCW.png" ng-click="DSArm.Motors[1].Advance(  -1);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCW.png"  ng-click="DSArm.Motors[1].Advance(   1);"
+             ><img style="vertical-align:middle" src="Images/icon_MultiStepCW.png"   ng-click="DSArm.Motors[1].Advance( 100);">
+            </td>
+            <td align="center">
+              <input type="number" class="digital scriptField" min="{{ DSArm.Motors[2].LowerLimit }}" max="{{ DSArm.Motors[2].UpperLimit }}" ng-model="position.elbow" /><br>
+              <img style="vertical-align:middle" src="Images/icon_MultiStepCCW.png"  ng-click="DSArm.Motors[2].Advance(-100);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCCW.png" ng-click="DSArm.Motors[2].Advance(  -1);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCW.png"  ng-click="DSArm.Motors[2].Advance(   1);"
+             ><img style="vertical-align:middle" src="Images/icon_MultiStepCW.png"   ng-click="DSArm.Motors[2].Advance( 100);">
+            </td>
+            <td align="center">
+              <input type="number" class="digital scriptField" min="{{ DSArm.Motors[3].LowerLimit }}" max="{{ DSArm.Motors[3].UpperLimit }}" ng-model="position.forearmRot" /><br>
+              <img style="vertical-align:middle" src="Images/icon_MultiStepCCW.png"  ng-click="DSArm.Motors[3].Advance(-100);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCCW.png" ng-click="DSArm.Motors[3].Advance(  -1);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCW.png"  ng-click="DSArm.Motors[3].Advance(   1);"
+             ><img style="vertical-align:middle" src="Images/icon_MultiStepCW.png"   ng-click="DSArm.Motors[3].Advance( 100);">
+            </td>
+            <td align="center">
+              <input type="number" class="digital scriptField" min="{{ DSArm.Motors[4].LowerLimit }}" max="{{ DSArm.Motors[4].UpperLimit }}" ng-model="position.wristTilt" /><br>
+              <img style="vertical-align:middle" src="Images/icon_MultiStepCCW.png"  ng-click="DSArm.Motors[4].Advance(-100);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCCW.png" ng-click="DSArm.Motors[4].Advance(  -1);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCW.png"  ng-click="DSArm.Motors[4].Advance(   1);"
+             ><img style="vertical-align:middle" src="Images/icon_MultiStepCW.png"   ng-click="DSArm.Motors[4].Advance( 100);">
+            </td>
+            <td align="center">
+              <input type="number" class="digital scriptField" min="{{ DSArm.Motors[5].LowerLimit }}" max="{{ DSArm.Motors[5].UpperLimit }}" ng-model="position.gripperRot" /><br>
+              <img style="vertical-align:middle" src="Images/icon_MultiStepCCW.png"  ng-click="DSArm.Motors[5].Advance(-100);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCCW.png" ng-click="DSArm.Motors[5].Advance(  -1);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCW.png"  ng-click="DSArm.Motors[5].Advance(   1);"
+             ><img style="vertical-align:middle" src="Images/icon_MultiStepCW.png"   ng-click="DSArm.Motors[5].Advance( 100);">
+            </td>
+            <td align="center">
+              <input type="number" class="digital scriptField" min="{{ DSArm.Motors[6].LowerLimit }}" max="{{ DSArm.Motors[6].UpperLimit }}" ng-model="position.gripper" /><br>
+              <img style="vertical-align:middle" src="Images/icon_MultiStepCCW.png"  ng-click="DSArm.Motors[6].Advance(-100);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCCW.png" ng-click="DSArm.Motors[6].Advance(  -1);"
+             ><img style="vertical-align:middle" src="Images/icon_SingleStepCW.png"  ng-click="DSArm.Motors[6].Advance(   1);"
+             ><img style="vertical-align:middle" src="Images/icon_MultiStepCW.png"   ng-click="DSArm.Motors[6].Advance( 100);">
+            </td>
+            <td align="right" >
+              <input type="number" class="digital scriptField" style="width:30px; max-width:30px" min="1" max="100" ng-model="position.percentMaxSpeed" />%
+            </td>
+            <td align="right" >
+              <input type="number" class="digital scriptField" style="width:60px; max-width:60px" min="0" ng-model="position.holdTime" />ms
+            </td>
+            <td align="center">
+              <label title="Skip this position during execution"><input type="checkbox" ng-model="position.skip" />Skip</label><br>
+              <button class="formButton" title="Move arm to this position" ng-click="goToPosition($index)">GoTo</button
+             ><button class="formButton deleteButton" title="Delete this position row" ng-click="deletePosition($index)">X</button>
+            </td>
+          </tr>
+
+        </table>
+
+        <div style="text-align:left">
+          <button id="plusButton" class="formButton" title="Add a new position row" ng-click="addNewPosition()"> &nbsp; + &nbsp; </button><br>
+        </div>
+
+        <!-- Control Buttons -->
+        <table width="100%"><tr>
+          <td width="100%" align="left" valign="bottom">
+            <button id="saveButton"    class="formButton" title="Save this script file"             ng-click="saveScript()"  > Save Script File </button>
+          </td>
+          <td align="right" valign="bottom">
+            <button id="homeButton"    class="formButton" title="Move the arm to its HOME position" ng-click="allHome()"     > All Home </button>
+            <button id="executeButton" class="formButton" title="Execute this script"               ng-click="startExecute()"> Execute Script </button>
+          </td>
+        </tr></table>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

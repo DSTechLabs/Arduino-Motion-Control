@@ -1,0 +1,49 @@
+<!--=======================================================
+//
+//     FILE : connection.html
+//
+//  PROJECT : DSArm Motion Controller
+//
+//  PURPOSE : E-Stop Button and BotServer Connection
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<style>
+
+  #eStopButton
+  {
+    margin         : 3px 0px;
+    vertical-align : middle;
+    cursor         : pointer;
+  }
+
+  #botServerStatus
+  {
+    margin-top : -5px;
+
+    font-family : Verdana, sans-serif;
+    font-size   : x-large;
+    font-weight : bold;
+    text-shadow : 1px 1px #000000;
+  }
+
+</style>
+
+<!-- E-Stop Button -->
+<img id="eStopButton" ng-src="Images/image_EStop_{{ DSArm.EStopped.toString() }}.png" ng-click="DSArm.EStopped ? DSArm.AllEResume() : DSArm.AllEStop()">
+
+<!-- BotServer Connection -->
+<div class="groupBox" style="margin:6px 0px 0px 10px; height:80px; max-height:80px; overflow:hidden">
+  <div class="groupBoxTitle">
+    <img src="Images/icon_Connection.png" style="vertical-align:middle"> Bot Server
+  </div>
+  <div class="groupBoxContent">
+    <div id="botServerStatus" ng-style="(ConnectionStatus == '√ Connected') ? { 'color':'#009000' } : { 'color': '#C00000' }">
+      {{ ConnectionStatus }}
+    </div>
+  </div>
+</div>

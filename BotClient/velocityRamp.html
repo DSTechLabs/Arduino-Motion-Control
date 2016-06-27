@@ -1,0 +1,50 @@
+<!--=======================================================
+//
+//     FILE : velocityRamp.html
+//
+//  PROJECT : DSArm Motion Controller Version 4
+//
+//  PURPOSE : Velocity Ramp popup
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<!-- Styles -->
+
+<style>
+
+</style>
+
+<!-- UI -->
+
+<div class="modalDiv">  <!--  style="width:800px; max-width:800px">  -->
+
+  <h1>Velocity Ramp</h1>
+  <hr>
+
+  Velocity Ramping is where the speed of a motor is gradually increased to a desired speed,<br>
+  runs at that speed and then is gradually decreased to a stop. &nbsp;Robotic and automation<br>
+  motors need to do this to eliminate the mechanical “shock” of a sudden start or stop of equipment.<br>
+  If a car stopped instantly at a traffic light, we’d be thrown through the windshield!<br>
+  <br>
+
+  The Arduino Firmware runs the stepper motors using velocity ramping. &nbsp;There are 10<br>
+  different “slopes” that are settable for the velocity ramp: 0 = no ramping (instant start/stop) ...<br>
+  9 = very gradual start/stop. &nbsp;When the Firmware starts up, the default slope is 6.<br>
+  <br>
+
+  Use low values (1, 2, ..) for fast accelerations with light loads and high values (.., 8, 9)<br>
+  for slow accelerations with heavy loads. &nbsp;It is highly recommended to use slow accelerations<br>
+  when moving high inertial loads.<br>
+  <br>
+
+  If we were to plot the velocity of a motor shaft (in steps per second) it would look like a trapezoid:<br>
+  <br>
+
+  <img src="Images/image_VelocityRamping.jpg" alt="Trapezoid Velocity" /><br>
+  <br>
+
+</div>

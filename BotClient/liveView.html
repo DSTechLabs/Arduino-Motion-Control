@@ -1,0 +1,75 @@
+<!--=======================================================
+//
+//     FILE : liveView.html
+//
+//  PROJECT : DSArm Motion Controller
+//
+//  PURPOSE : Webcam view of arm and environment
+//
+//   AUTHOR : Bill Daniels
+//            Copyright 2014-2016, D+S Tech Labs, Inc.
+//            All Rights Reserved
+//
+//======================================================-->
+
+<!--=======================================================
+    LiveView Styles
+========================================================-->
+
+<style>
+
+  #liveView
+  {
+    margin  : 0px;
+    padding : 0px;
+
+    background-color : transparent;
+
+    text-align : center;
+  }
+
+  #liveViewWindow
+  {
+    margin-top : 12px;
+
+    width     : 390px;
+    min-width : 390px;
+    max-width : 390px;
+
+    background-color: #000000;
+  }
+
+  .positionLabel
+  {
+    display    : inline-block;
+    width      : 140px;
+    text-align : right;
+  }
+
+</style>
+
+<!--=======================================================
+    LiveView UI
+========================================================-->
+
+<div id="liveView" ng-controller="LiveViewController">
+
+  <div class="tabpageTitle">
+    <img src="Images/icon_LiveView.png" style="vertical-align:middle">
+    <span style="vertical-align:middle">Live View</span>
+  </div>
+
+  <div id="liveViewWindow">
+    <img src="Images/image_LiveView.jpg" style="text-align:center; vertical-align:middle;">
+  </div>
+
+  <div class="groupBox" style="margin-top:10px;">
+    <div class="groupBoxTitle">Current Position</div>
+    <div class="groupBoxContent" style="text-align:left">
+      <div ng-repeat="motor in DSArm.Motors">
+        <label class="formLabel">{{ motor.Name }}:</label> <label class="digital">{{ motor.Position }}</label><br>
+      </div>
+    </div>
+  </div>
+
+</div>
