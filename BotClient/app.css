@@ -46,10 +46,10 @@ body
 
 /*--- Globals -------------------------------------------*/
 
-a:link    { text-decoration : none; color : #00D0D0; border:0px; }
-a:visited { text-decoration : none; color : #00D0D0; border:0px; }
-a:hover   { text-decoration : none; color : #00D0D0; border:0px; }
+a:link    { text-decoration : none; color : #008080; border:0px; }
+a:hover   { text-decoration : none; color : #00C0C0; border:0px; }
 a:active  { text-decoration : none; color : #FFFF00; border:0px; }
+a:visited { text-decoration : none; color : #008080; border:0px; }
 
 .dropShadow
 {
@@ -401,6 +401,82 @@ a:active  { text-decoration : none; color : #FFFF00; border:0px; }
   border : 2px inset #000000;
 }
 
+.formButton:disabled
+{
+  color          : #A0A0A0;
+  background     : #606060;
+  pointer-events : none;
+}
+
+.large
+{
+  padding       : 3px 7px;
+  border-radius : 10px;
+  font-size     : xx-large;
+}
+
+.small
+{
+  padding       : 1px 2px;
+  border-radius : 5px;
+  font-size     : small;
+}
+
+.xsmall
+{
+  padding       : 0px;
+  border-radius : 3px;
+  font-size     : x-small;
+}
+
+.addNew
+{
+  color            : #E0E0E0;
+  background-color : #008000;  /* fallback */
+  background       : -webkit-linear-gradient(#00A000, #006000); /* Safari 5.1 to 6.0  */
+  background       : -o-linear-gradient(#00A000, #006000);      /* Opera 11.1 to 12.0 */
+  background       : -moz-linear-gradient(#00A000, #006000);    /* Firefox 3.6 to 15  */
+  background       : linear-gradient(#00A000, #006000);         /* Standard syntax    */
+
+  text-shadow : 1px 1px #000000;
+}
+
+.action
+{
+  color            : #E0E0E0;
+  background-color : #000080;  /* fallback */
+  background       : -webkit-linear-gradient(#0000A0, #000060); /* Safari 5.1 to 6.0  */
+  background       : -o-linear-gradient(#0000A0, #000060);      /* Opera 11.1 to 12.0 */
+  background       : -moz-linear-gradient(#0000A0, #000060);    /* Firefox 3.6 to 15  */
+  background       : linear-gradient(#0000A0, #000060);         /* Standard syntax    */
+  
+  text-shadow : 1px 1px #000000;
+}
+
+.warning
+{
+  color            : #000000;
+  background-color : #FFFF00;  /* fallback */
+  background       : -webkit-linear-gradient(#FFFF00, #F0F000); /* Safari 5.1 to 6.0  */
+  background       : -o-linear-gradient(#FFFF00, #F0F000);      /* Opera 11.1 to 12.0 */
+  background       : -moz-linear-gradient(#FFFF00, #F0F000);    /* Firefox 3.6 to 15  */
+  background       : linear-gradient(#FFFF00, #F0F000);         /* Standard syntax    */
+  
+  text-shadow : 1px 1px #FFFFFF;
+}
+
+.error
+{
+  color            : #FFFFFF;
+  background-color : #C00000;  /* fallback */
+  background       : -webkit-linear-gradient(#E00000, #A00000); /* Safari 5.1 to 6.0  */
+  background       : -o-linear-gradient(#E00000, #A00000);      /* Opera 11.1 to 12.0 */
+  background       : -moz-linear-gradient(#E00000, #A00000);    /* Firefox 3.6 to 15  */
+  background       : linear-gradient(#E00000, #A00000);         /* Standard syntax    */
+  
+  text-shadow : 1px 1px #000000;
+}
+
 /*--- digital -------------------------------------------*/
 
 .digital
@@ -423,4 +499,9 @@ a:active  { text-decoration : none; color : #FFFF00; border:0px; }
 
   text-align     : right;
   vertical-align : middle;
+}
+
+.readonly
+{
+  background-color : #505050;
 }

@@ -66,9 +66,7 @@
 
   .motorLimit
   {
-    width            : 80px;
-    background-color : #606060;
-    font-size        : medium;
+    font-size : medium;
   }
 
   .disableBox
@@ -144,7 +142,7 @@
 
               <div style="display:inline-block; vertical-align:bottom">
                 <label class="tinyText">Lower Limit:</label><br>
-                <label class="digital motorLimit">{{ motor.LowerLimit }}</label>
+                <label class="digital readonly motorLimit">{{ motor.LowerLimit }}</label>
               </div>
 <!--
               <button class="formButton" title="Set this motor's LOWER LIMIT to the current position shown above" ng-click="motor.SetLowerLimit(motor.Position)">
@@ -161,7 +159,7 @@
 -->
               <div style="display:inline-block; vertical-align:bottom">
                 <label class="tinyText">Upper Limit:</label><br>
-                <label class="digital motorLimit">{{ motor.UpperLimit }}</label>
+                <label class="digital readonly motorLimit">{{ motor.UpperLimit }}</label>
               </div>
 
             </div>

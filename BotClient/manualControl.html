@@ -127,7 +127,8 @@
             <!-- Motor Name -->
             <div class="sliderLeft">
               <div class="sliderTitle">{{ motor.Name }}</div><br>
-              <label class="digital" style="position:absolute; left:0px; bottom:0px">{{ motor.Position }}</label>
+              <input type="number" class="digital" style="position:absolute; left:0px; bottom:0px; -moz-appearance:textfield" min="{{ motor.LowerLimit }}" max="{{ motor.UpperLimit }}" ng-model="motor.Position" /><br>
+          <!--  <label class="digital" style="position:absolute; left:0px; bottom:0px">{{ motor.Position }}</label>  -->
             </div>
 
             <div class="sliderRight">
@@ -138,9 +139,7 @@
 
               <!-- Velocity Ramp -->
               <label class="formLabel" style="margin-left:10px; width:80px">V-Ramp:</label>
-              <select class="formField" style="width:50px" ng-model="motor.VelRamp" ng-change="motor.SetVelocityRamp (motor.VelRamp)">
-                <option ng-repeat="item in rampOptions" value="{{ item }}">{{ item }}</option>
-              </select>
+              <select class="formField" style="width:50px" ng-options="item for item in rampOptions" ng-model="motor.VelRamp" ng-change="motor.SetVelocityRamp (motor.VelRamp)"></select>
               <img src="Images/icon_Question.png" style="cursor:pointer; vertical-align:middle" onmousedown="ShowModalFile ('velocityRamp.html')" alt="?"><br>
 
               <!-- Slider -->
