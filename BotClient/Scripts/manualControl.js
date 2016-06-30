@@ -25,7 +25,7 @@ angular.module ('ManualControlModule', [])
     //--- Data --------------------------------------------
 
     // Valid velocity ramp values are 0-9
-    $scope.rampOptions  = [ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' ];
+    $scope.rampOptions = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
 
     // //--- setSpeed ----------------------------------------
     //

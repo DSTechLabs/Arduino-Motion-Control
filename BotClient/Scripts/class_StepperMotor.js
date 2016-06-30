@@ -37,7 +37,7 @@ function StepperMotor (motorIndex, name, defaultSpeed, rootScope)
       this.LowerLimit   = -2000000;
       this.UpperLimit   = 2000000;
       this.DefaultSpeed = Math.min (Math.max (defaultSpeed, 1), 9999);  // Steps per second
-      this.VelRamp      = '6';    // Must be '0'..'9'
+      this.VelRamp      = 6;      // Must be 0...9
       this.Homed        = false;  // HOME position must be set for motor before it can be used
       this.Moving       = false;
       this.Disabled     = false;
@@ -166,17 +166,17 @@ StepperMotor.prototype.SetUpperLimit = function (limit)
 
 //--- SetVelocityRamp -------------------------------------
 
-StepperMotor.prototype.SetVelocityRamp = function (ramp)
+StepperMotor.prototype.SetVelocityRamp = function (rVal)
 {
   try
   {
-    if (ramp < '0' || ramp > '9')
-      alert ('Invalid velocity ramp: ' + ramp + '\nMust be a single digit (char) \'0\' - \'9\'');
+    if (rVal < 0 || rVal > 9)
+      alert ('Invalid velocity ramp: ' + rVal.toString() + '\nMust be a single digit 0 - 9');
     else
     {
       // SET RAMP SLOPE
-      this.VelRamp = ramp;
-      var command  = 'SR' + ramp;
+      this.VelRamp = rVal;
+      var command  = 'SR' + rVal.toString();
       this.RootScope.PostMessage (this.MotorIndex + command, true);
     }
   }

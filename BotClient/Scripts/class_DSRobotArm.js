@@ -201,7 +201,7 @@ DSRobotArm.prototype.SyncGoTo = function (positionArray, percentMaxSpeed)
       if (numSteps[i] > maxSteps) maxSteps = numSteps[i];
     }
     
-    // Move all motors calculating speeds proportional to max speed (synchronize motion)
+    // Move all motors calculating speeds proportional to max speed (synchronized motion)
     for (i=0; i<this.Motors.length; i++)
     {
       if (numSteps[i] > 0)

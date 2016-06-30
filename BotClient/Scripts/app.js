@@ -138,7 +138,7 @@ app.run (function ($rootScope, $window, $timeout)
       $rootScope.WebSocket.on ('message', function (botServerMessage)
       {
         // Strip trailing <CR><LF>
-        botServerMessage = botServerMessage.replace ('\r', '').replace ('\n', '');
+        botServerMessage = botServerMessage.replaceAll ('\r', '').replaceAll ('\n', '');
 
         // Log incoming message
         $rootScope.MonitorList += GetTimestamp() + ' <-- ' + botServerMessage + '\n';
