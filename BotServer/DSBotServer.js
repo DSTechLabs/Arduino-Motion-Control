@@ -303,16 +303,16 @@ function ProcessClientMessage (clientMessage)
       PostMessage (motorLimitString, true);
     }
 
-    //---------------------------------
-    // Set Motor Limits
-    //---------------------------------
-    else if (clientMessage.startsWith ('ML:'))
-    {
-      // Save the specified motor limits in <motorConfigs.json>
-
-
-
-    }
+    ////---------------------------------
+    //// Set Motor Limits
+    ////---------------------------------
+    //else if (clientMessage.startsWith ('ML:'))
+    //{
+    //  // Save the specified motor limits in <motorConfigs.json>
+    //
+    //
+    //
+    //}
 
     //---------------------------------
     // Get Script File List
