@@ -8,3 +8,9 @@ The bottom layer is the Arduino firmware that runs a single stepper motor using 
 The middle layer is the BotServer or CNCServer.  It is a Node.JS application that serves two roles.  1) It uses node-serialport to connect with and process messages to/from the Arduino Nanos.  2) It uses Express and Socket.io to "serve" a website to the end user with Web-Socket messaging. (see the BotServer folder)
 
 The top layer is the website served by the BotServer or CNCServer node app.  It is the complete Motion Control application and interface to the end user.  It communicates with the BotServer by web-socket, so the user actually has a "chat session" with his robot or CNC machine.  Think of the popular CNC software MACH 3/4 as being a web app, so the user can operate the machinery remotely, if need be. (see the BotClient folder)
+
+---------------------------------------------
+  UPDATE - 7/14/2016
+---------------------------------------------
+I have generalized the BotClient and BotServer into a "NodeBot Server Platform".  See the 'NodeBot Server Platform' repo!
+Use it to control your NodeBot on any device with a browser!
